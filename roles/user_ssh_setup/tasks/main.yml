@@ -1,0 +1,56 @@
+- name: create users
+  tags: always
+  user:
+    state: present
+    name: '{{ item }}'
+    group: root
+  loop:
+    - ansible
+    - mitch
+
+- name: ssh key for ansible
+  tags: always
+  authorized_key:
+    state: present
+    user: ansible
+    key: '{{ item }}'
+  with_file:
+    - public_keys/ansible
+    - public_keys/office
+
+- name: ssh key for mitch
+  tags: always
+  authorized_key:
+    state: present
+    user: mitch
+    key: '{{ item }}'
+  with_file:
+    - public_keys/office
+
+- name: add sudoers file for ansible
+  tags: always
+  copy:
+    state: present
+    src: sudoer_ansible
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: 0440
+
+- name: configure sshd
+  tags: always
+  lineinfile:
+    state: present
+    path: '/etc/ssh/sshd_config'
+    regex: '^(#)?{{item.key}}'
+    line: '{{item.key}} {{item.value}}'
+  loop:
+    - { key: 'StrictModes', value: 'yes' }
+    - { key: 'PermitRootLogin', value: 'no' }
+    - { key: 'PasswordAuthentication', value: 'no' }
+    - { key: 'PermitEmptyPasswords', value: 'no' }
+    - { key: 'ChallengeResponseAuthentication', value: 'no' }
+    - { key: 'UsePAM', value: 'no' }
+    - { key: 'HostbasedAuthentication', value: 'no' }
+  notify:
+    - restart_sshd     
