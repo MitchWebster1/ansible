@@ -1,44 +1,46 @@
-- name: create users
-  tags: always
+---
+
+- name: create admin groups
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ users_admin_groups }}"
+
+- name: Define admin users
+  set_fact:
+    admin_users: "{{ users_admin_users | unique }}"
+
+- name: Define authorized users
+  set_fact:
+    all_users: "{{ users_admin_users | union(users_app_users) | unique }}"
+
+- name: Add admin users
   user:
-    state: present
-    name: '{{ item }}'
-    group: root
-  loop:
-    - ansible
-    - mitch
+    name: "{{ item }}"
+    groups: "{{ users_admin_groups | join(',') }}"
+    comment: "ansible-{{ item }}"
+    shell: /bin/bash
+    append: no
+  with_items: "{{ users_admin_users }}"
 
-- name: ssh key for ansible
-  tags: always
-  authorized_key:
+- name: Set ssh keys for admin users
+  ansible.posix.authorized_key:
+    user: "{{ item.user }}"
+    key: "{{ item.key | join('\n') }}"
     state: present
-    user: ansible
-    key: '{{ item }}'
-  with_file:
-    - public_keys/ansible
-    - public_keys/office
+    exclusive: true
+  with_items: "{{ users_users }}"
+  when: item.key is defined and item.user in admin_users
 
-- name: ssh key for mitch
-  tags: always
-  authorized_key:
-    state: present
-    user: mitch
-    key: '{{ item }}'
-  with_file:
-    - public_keys/office
-
-- name: add sudoers file for ansible
-  tags: always
-  copy:
-    state: present
-    src: sudoer_ansible
-    dest: /etc/sudoers.d/ansible
+- name: Allow users in admin group to run sudo
+  template:
+    src: 00-admin
+    dest: /etc/sudoers.d/00-admin
     owner: root
     group: root
     mode: 0440
 
 - name: configure sshd
-  tags: always
   lineinfile:
     state: present
     path: '/etc/ssh/sshd_config'
@@ -52,5 +54,6 @@
     - { key: 'ChallengeResponseAuthentication', value: 'no' }
     - { key: 'UsePAM', value: 'no' }
     - { key: 'HostbasedAuthentication', value: 'no' }
+    - { key: 'AllowGroups', value: 'sshusers sftpusers' }
   notify:
     - restart_sshd     
