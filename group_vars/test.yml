@@ -3,13 +3,11 @@
 users_users:
   - user: ansible
     name: "Ansible server"
-    key:
+    key: 
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIXaEI92mDk+jIoVTzH0+YTI0HabPBaBCVogHJd8xq1Z ansible
-      # - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMwen6lHvz1QFveQB0y9vvvNArZUAQ8GrqARF8rpKCIC mitch@Office
-      # - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLkxOgw2GXIm1ot/18IStuYku64pjYd6ARYbkXcm2Z9 mitch@laptop
   - user: mitch
     name: "Mitch"
-    key:
+    key: 
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMwen6lHvz1QFveQB0y9vvvNArZUAQ8GrqARF8rpKCIC mitch@Office
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLkxOgw2GXIm1ot/18IStuYku64pjYd6ARYbkXcm2Z9 mitch@laptop
 
@@ -26,7 +24,7 @@ users_admin_groups:
 
 # App users no sudo permission
 # users_app_users:
-#   - app
+#   - bob
 users_app_users: []
 
 # users_app_groups:
