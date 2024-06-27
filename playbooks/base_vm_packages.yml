@@ -1,0 +1,8 @@
+- hosts: test
+  become: true
+  become_method: sudo
+  gather_facts: no
+  roles:
+    - ../roles/apt_upgrade
+    - ../roles/base_vm_packages
+    

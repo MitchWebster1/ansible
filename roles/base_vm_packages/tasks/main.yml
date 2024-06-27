@@ -1,0 +1,11 @@
+---
+
+- name: install base packages
+  apt:
+    name:
+      - qemu-guest-agent
+
+- name: start qemu-guest-agent
+  service:
+    name: qemu-guest-agent
+    state: started
