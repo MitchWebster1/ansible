@@ -1,4 +1,15 @@
 
 bootstrap:
   hosts:
+
+ansible:
+  hosts:
     192.168.10.125:
+
+network:
+  hosts:
+    192.168.20.116: #adguard lxc
+
+proxmox:
+  hosts:
+    192.168.10.5:
