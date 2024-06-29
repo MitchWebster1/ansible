@@ -1,9 +1,10 @@
 ---
 
 users_users:
-  - user: ansible
+  - user: CI
     name: "Ansible server"
     key: 
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIXaEI92mDk+jIoVTzH0+YTI0HabPBaBCVogHJd8xq1Z ansible  #ansible VM ssh key
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMwen6lHvz1QFveQB0y9vvvNArZUAQ8GrqARF8rpKCIC mitch@Office
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLkxOgw2GXIm1ot/18IStuYku64pjYd6ARYbkXcm2Z9 mitch@laptop
       # - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIXaEI92mDk+jIoVTzH0+YTI0HabPBaBCVogHJd8xq1Z ansible
@@ -15,7 +16,7 @@ users_users:
 
 # users_admin_users: []
 users_admin_users:
-  - ansible
+  - CI
   - mitch
 
 # users_admin_groups: []

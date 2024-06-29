@@ -1,0 +1,18 @@
+---
+
+- name: install dependent packages
+  apt:
+    name:
+      - software-properties-common
+
+- name: add ansible repository
+  ansible.builtin.apt_repository:
+    repo: ppa:ansible/ansible
+    state: present
+
+- name: install ansible
+  apt:
+    name:
+      - ansible
+      - ansible-lint
+    state: latest
