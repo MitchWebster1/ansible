@@ -1,4 +1,4 @@
-- hosts: test
+- hosts: bootstrap
   become: true
   become_method: sudo
   gather_facts: no

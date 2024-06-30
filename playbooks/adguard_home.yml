@@ -1,0 +1,13 @@
+- hosts: network
+  become: true
+  become_method: sudo
+  gather_facts: true
+  roles:
+    # - ../roles/user_ssh_setup
+    # - ../roles/docker_install
+    - ../roles/docker_adguard_home
+  vars:
+    users_app_users: adguard
+    users_app_groups: sshusers
+  vars_files:
+    - ../group_vars/bootstrap.yml

@@ -24,6 +24,16 @@
     append: no
   with_items: "{{ users_admin_users }}"
 
+- name: add app users
+  user:
+    name: "{{ item }}"
+    group: "{{ users_app_groups }}"
+    password: '*'
+    comment: "ansible-{{ item }}"
+    shell: /bin/bash
+    append: no
+  with_items: "{{ users_app_users }}"
+
 - name: Create a directory if it does not exist
   ansible.builtin.file:
     path: /etc/sudoers.d

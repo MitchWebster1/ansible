@@ -25,8 +25,8 @@ users_admin_groups:
 # App users no sudo permission
 # users_app_users:
 #   - bob
-users_app_users: []
+# users_app_users: []
 
 # users_app_groups:
 #   - sshusers
-users_app_groups: []
+# users_app_groups: []
