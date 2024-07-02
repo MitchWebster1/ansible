@@ -4,7 +4,7 @@ users_users:
   - user: CI
     name: "Ansible server"
     key: 
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDWNEoejZcZHOjRw9V7vf/p61XkhtGVd/z3zVpIjM6w ansible_host
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAc0rgWO+bpJj9QRKQsLuq0qt9PGjKnwjy2PBtFbli2u ansible_host
   - user: mitch
     name: "Mitch"
     key: 
