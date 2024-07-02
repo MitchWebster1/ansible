@@ -1,7 +1,11 @@
 - hosts: ansible
   become: true
   become_method: sudo
-  gather_facts: no
+  gather_facts: true
   roles:
     - ../roles/apt_upgrade
+    - ../roles/admin_users_groups
     - ../roles/ansible_install
+
+  vars_files:
+    - ../group_vars/admin_users.yml

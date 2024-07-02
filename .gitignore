@@ -14,3 +14,9 @@ _book
 *.epub
 *.mobi
 *.pdf
+
+# docker env files
+.env
+
+# until I set up vault
+traefik.yml

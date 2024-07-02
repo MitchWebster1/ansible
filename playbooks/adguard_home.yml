@@ -3,11 +3,13 @@
   become_method: sudo
   gather_facts: true
   roles:
-    # - ../roles/user_ssh_setup
+    - ../roles/apt_upgrade
+    # - ../roles/admin_users_groups
+    # - ../roles/app_users_groups
     # - ../roles/docker_install
     - ../roles/docker_adguard_home
   vars:
     users_app_users: adguard
-    users_app_groups: sshusers
+    users_app_groups: docker
   vars_files:
-    - ../group_vars/bootstrap.yml
+    - ../group_vars/admin_users.yml

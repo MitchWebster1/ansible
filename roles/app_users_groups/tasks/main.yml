@@ -1,0 +1,20 @@
+---
+
+- name: create app groups
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - "{{ users_app_groups }}"
+    - "{{ users_app_users }}"
+
+- name: add app users
+  user:
+    name: "{{ item }}"
+    group: "{{ item }}"
+    groups: "{{ users_app_groups | join(',') }}"
+    password: '*'
+    comment: "ansible-{{ item }}"
+    shell: /bin/bash
+    append: no
+  with_items: "{{ users_app_users }}"

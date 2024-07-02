@@ -4,6 +4,7 @@
   apt:
     name:
       - software-properties-common
+      - git
 
 - name: add ansible repository
   ansible.builtin.apt_repository:

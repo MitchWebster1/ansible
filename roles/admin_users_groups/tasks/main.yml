@@ -4,21 +4,9 @@
   group:
     name: "{{ item }}"
     state: present
-  with_items: "{{ users_admin_groups }}"
-
-- name: create app groups
-  group:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ users_app_groups }}"
-
-- name: Define admin users
-  set_fact:
-    admin_users: "{{ users_admin_users | unique }}"
-
-- name: Define authorized users
-  set_fact:
-    all_users: "{{ users_admin_users | union(users_app_users) | unique }}"
+  with_items: 
+    - "{{ users_admin_groups }}"
+    - "{{ users_admin_users }}"
 
 - name: Add admin users
   user:
@@ -31,17 +19,7 @@
     append: no
   with_items: "{{ users_admin_users }}"
 
-- name: add app users
-  user:
-    name: "{{ item }}"
-    groups: "{{ users_app_groups | join(',') }}"
-    password: '*'
-    comment: "ansible-{{ item }}"
-    shell: /bin/bash
-    append: no
-  with_items: "{{ users_app_users }}"
-
-- name: Create a directory if it does not exist
+- name: Create sudoers directory if it does not exist
   ansible.builtin.file:
     path: /etc/sudoers.d
     state: directory
@@ -56,7 +34,7 @@
     owner: root
     group: root
     mode: 0440
-  with_items: "{{ admin_users }}"
+  with_items: "{{ users_admin_users }}"
 
 - name: Set ssh keys for admin users
   ansible.posix.authorized_key:
@@ -67,9 +45,6 @@
   become_user: "{{ item.user }}"
   with_items: "{{ users_users }}"
   when: item.key is defined and item.user in users_admin_users
-
-  # "{{ item.key | join('\n') }}"
-  # "{{ lookup('file', item.key) }}"
 
 - name: configure sshd
   lineinfile:
