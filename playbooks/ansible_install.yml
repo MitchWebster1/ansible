@@ -1,11 +1,14 @@
-- hosts: ansible
+---
+
+- name: Install ansible
+  hosts: ansible
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   gather_facts: true
   roles:
-    - ../roles/apt_upgrade
-    - ../roles/admin_users_groups
-    - ../roles/ansible_install
+    - apt_upgrade
+    - admin_users_groups
+    - ansible_install
 
   vars_files:
     - ../group_vars/admin_users.yml

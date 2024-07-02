@@ -1,13 +1,16 @@
-- hosts: network
+---
+
+- name: Install adguard home
+  hosts: adguard
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   gather_facts: true
   roles:
-    - ../roles/apt_upgrade
+    - apt_upgrade
     # - ../roles/admin_users_groups
     # - ../roles/app_users_groups
     # - ../roles/docker_install
-    - ../roles/docker_adguard_home
+    - docker_adguard_home
   vars:
     users_app_users: adguard
     users_app_groups: docker

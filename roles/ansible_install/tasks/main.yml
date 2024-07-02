@@ -16,8 +16,12 @@
   ansible.builtin.apt:
     name:
       - ansible
-      - ansible-dev-tools
+      - ansible-lint
     state: present
+
+- name: Generate locale
+  ansible.builtin.command: locale-gen en_US.UTF-8
+  changed_when: false
 
 # install ansible-dev-tools with pip3 use sudo, or perhaps change to ansible user to install both ansible and ansible-dev-tools
 # should I install ansible via pip3 as well?

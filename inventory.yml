@@ -4,12 +4,14 @@ bootstrap:
 
 ansible:
   hosts:
-    192.168.10.108:
+    192.168.10.110:
 
-network:
+docker:
   hosts:
-    192.168.20.108: #traefik lxc
-    # 192.168.20.10: #adguard lxc
+    traefik:
+      ansible_host: 192.168.20.108 #traefik lxc
+    adguard:
+      ansible_host: 192.168.20.10 #adguard lxc
 
 proxmox:
   hosts:

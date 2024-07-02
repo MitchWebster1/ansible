@@ -18,5 +18,5 @@ _book
 # docker env files
 .env
 
-# until I set up vault
-traefik.yml
+# vault password
+.vault
