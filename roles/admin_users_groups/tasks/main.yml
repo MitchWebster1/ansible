@@ -21,17 +21,6 @@
   become: true
   with_items: "{{ users_admin_users }}"
 
-- name: Create ansible tmp directory
-  ansible.builtin.file:
-    path: /home/{{ item }}/.ansible/tmp
-    state: directory
-    owner: "{{ item }}"
-    group: "{{ item }}"
-    mode: '0700'
-  become: true
-  become_user: "{{ item }}"
-  with_items: "{{ users_admin_users }}"
-
 - name: Create sudoers directory if it does not exist
   ansible.builtin.file:
     path: /etc/sudoers.d
