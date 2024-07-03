@@ -1,20 +1,22 @@
 ---
 
-- name: create app groups
-  group:
+- name: Create app groups
+  become: true
+  ansible.builtin.group:
     name: "{{ item }}"
     state: present
-  with_items: 
+  with_items:
     - "{{ users_app_groups }}"
     - "{{ users_app_users }}"
 
-- name: add app users
-  user:
+- name: Add app users
+  become: true
+  ansible.builtin.user:
     name: "{{ item }}"
     group: "{{ item }}"
     groups: "{{ users_app_groups | join(',') }}"
     password: '*'
     comment: "ansible-{{ item }}"
     shell: /bin/bash
-    append: no
+    append: false
   with_items: "{{ users_app_users }}"

@@ -1,7 +1,7 @@
 ---
 
-- name: install required packages
-  apt:
+- name: Install required packages
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - ca-certificates
@@ -10,21 +10,21 @@
       - python3-docker
       - virtualenv
       - python3-setuptools
-    state: latest
+    state: present
     update_cache: true
 
-- name: add docker GPG apt key
-  apt_key:
+- name: Add docker GPG apt key
+  ansible.builtin.apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
-- name: add docker repository
+- name: Add docker repository
   ansible.builtin.apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu noble stable
     state: present
 
-- name: install docker-ce
-  apt:
+- name: Install docker-ce
+  ansible.builtin.apt:
     name: docker-ce
-    state: latest
+    state: present
     update_cache: true

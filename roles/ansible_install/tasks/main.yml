@@ -8,6 +8,7 @@
       - git
       - python3-pip
       - virtualenv
+  update_cache: true
 
 # - name: Set Git configs
 #   become: true

@@ -1,10 +1,8 @@
 ---
 
-- hosts: bootstrap
-  become: true
-  become_method: ansible.builtin.sudo
-  gather_facts: false
+- name: Install base packages on new VM
+  hosts: bootstrap
+  gather_facts: true
   roles:
-    - ../roles/apt_upgrade
-    - ../roles/base_vm_packages
-    
+    - apt_upgrade
+    - base_vm_packages

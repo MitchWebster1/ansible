@@ -1,11 +1,11 @@
 ---
 
-- name: deploy adguard docker network
-  docker_network:
+- name: Deploy adguard docker network
+  community.docker.docker_network:
     name: adguard
 
-- name: deploy adguard container
-  docker_container:
+- name: Deploy adguard container
+  community.docker.docker_container:
     name: adguard
     image: adguard/adguardhome:latest
     restart_policy: unless-stopped

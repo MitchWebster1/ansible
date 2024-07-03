@@ -1,11 +1,13 @@
 ---
 
-- name: install base packages
-  apt:
+- name: Install base packages
+  become: true
+  ansible.builtin.apt:
     name:
       - qemu-guest-agent
 
-- name: start qemu-guest-agent
-  service:
+- name: Start qemu-guest-agent
+  become: true
+  ansible.builtin.service:
     name: qemu-guest-agent
     state: started

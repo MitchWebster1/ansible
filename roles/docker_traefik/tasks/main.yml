@@ -1,46 +1,50 @@
 ---
 
-- name: copy acme.json
+- name: Copy acme.json
+  become: true
   become_user: traefik
   ansible.builtin.template:
     src: acme.json.j2
     dest: /home/traefik/acme.json
     owner: traefik
     group: traefik
-    mode: 0600
+    mode: '0600'
     force: false
     backup: true
 
-- name: copy config.yml
+- name: Copy config.yml
+  become: true
   become_user: traefik
   ansible.builtin.template:
     src: config.yml.j2
     dest: /home/traefik/config.yml
     owner: traefik
     group: traefik
-    mode: 0644
+    mode: '0644'
     force: false
     backup: true
 
-- name: copy traefik.yml
+- name: Copy traefik.yml
+  become: true
   become_user: traefik
   ansible.builtin.template:
     src: traefik.yml.j2
     dest: /home/traefik/traefik.yml
     owner: traefik
     group: traefik
-    mode: 0644
+    mode: '0644'
     force: false
-    backup: yes
+    backup: true
 
-- name: deploy traefik proxy network
+- name: Deploy traefik proxy network
   # become_user: traefik
-  docker_network:
+  community.docker.docker_network:
     name: proxy
 
-- name: deploy traefik container
+- name: Deploy traefik container
+  become: true
   become_user: traefik
-  docker_container:
+  community.docker.docker_container:
     name: traefik
     image: traefik:latest
     restart_policy: always

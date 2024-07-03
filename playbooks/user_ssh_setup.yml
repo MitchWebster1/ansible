@@ -1,7 +1,14 @@
-- hosts: bootstrap
-  become: true
-  become_method: sudo
-  gather_facts: no
+---
+
+- name: Set up new users and groups
+  hosts: all
+  gather_facts: true
   roles:
-    - ../roles/apt_upgrade
-    - ../roles/admin_users_groups
+    - apt_upgrade
+    - admin_users_groups
+    - app_users_groups
+  vars:
+    users_app_users: adguard
+    users_app_groups: docker
+  vars_files:
+    - ../group_vars/admin_users.yml

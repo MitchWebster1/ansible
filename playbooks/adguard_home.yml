@@ -7,9 +7,9 @@
   gather_facts: true
   roles:
     - apt_upgrade
-    # - ../roles/admin_users_groups
-    # - ../roles/app_users_groups
-    # - ../roles/docker_install
+    - admin_users_groups
+    - app_users_groups
+    - docker_install
     - docker_adguard_home
   vars:
     users_app_users: adguard
