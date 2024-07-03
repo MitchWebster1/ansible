@@ -2,8 +2,6 @@
 
 - name: Install ansible
   hosts: ansible
-  become: true
-  become_method: ansible.builtin.sudo
   gather_facts: true
   roles:
     - apt_upgrade
