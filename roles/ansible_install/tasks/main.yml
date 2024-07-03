@@ -3,12 +3,13 @@
 - name: Install dependent packages
   become: true
   ansible.builtin.apt:
-    name:
+    pkg:
       - software-properties-common
       - git
       - python3-pip
       - virtualenv
-  update_cache: true
+    state: present
+    update_cache: true
 
 # - name: Set Git configs
 #   become: true

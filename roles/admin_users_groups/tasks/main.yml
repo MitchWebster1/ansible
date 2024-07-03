@@ -1,16 +1,15 @@
 ---
 
 - name: Create admin groups
-  become: true
   ansible.builtin.group:
     name: "{{ item }}"
     state: present
+  become: true
   with_items:
     - "{{ users_admin_groups }}"
     - "{{ users_admin_users }}"
 
 - name: Add admin users
-  become: true
   ansible.builtin.user:
     name: "{{ item }}"
     group: "{{ item }}"
@@ -19,51 +18,51 @@
     comment: "ansible-{{ item }}"
     shell: /bin/bash
     append: false
+  become: true
   with_items: "{{ users_admin_users }}"
 
 - name: Create ansible tmp directory
-  become: true
   ansible.builtin.file:
     path: /home/{{ item }}/.ansible/tmp
     state: directory
     owner: "{{ item }}"
     group: "{{ item }}"
     mode: '0700'
+  become: true
   become_user: "{{ item }}"
   with_items: "{{ users_admin_users }}"
 
 - name: Create sudoers directory if it does not exist
-  become: true
   ansible.builtin.file:
     path: /etc/sudoers.d
     state: directory
     owner: root
     group: root
     mode: '0440'
+  become: true
 
 - name: Allow users in admin group to run sudo
-  become: true
   ansible.builtin.template:
     src: 00-admin
     dest: /etc/sudoers.d/{{ item }}
     owner: root
     group: root
     mode: "0440"
+  become: true
   with_items: "{{ users_admin_users }}"
 
 - name: Set ssh keys for admin users
-  become: true
   ansible.posix.authorized_key:
     user: "{{ item.user }}"
     key: "{{ item.key | join('\n') }}"
     state: present
     exclusive: true
+  become: true
   become_user: "{{ item.user }}"
   with_items: "{{ users_users }}"
   when: item.key is defined and item.user in users_admin_users
 
 - name: Configure sshd_config
-  become: true
   ansible.builtin.lineinfile:
     state: present
     path: '/etc/ssh/sshd_config'
@@ -78,5 +77,6 @@
     - { key: 'UsePAM', value: 'no' }
     - { key: 'HostbasedAuthentication', value: 'no' }
     - { key: 'AllowGroups', value: 'sshusers sftpusers' }
+  become: true
   notify:
-    - restart_sshd
+    - Restart_sshd
