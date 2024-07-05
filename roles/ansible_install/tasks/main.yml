@@ -20,26 +20,26 @@
 #       - git config --global user.email "mitch83083@gmail.com"
 #   changed_when: true
 
-- name: Add ansible repository
-  become: true
-  ansible.builtin.apt_repository:
-    repo: ppa:ansible/ansible
-    state: present
+# - name: Add ansible repository
+#   become: true
+#   ansible.builtin.apt_repository:
+#     repo: ppa:ansible/ansible
+#     state: present
 
-- name: Install ansible
-  become: true
-  ansible.builtin.apt:
-    name:
-      - ansible
-    state: present
-    update_cache: true
+# - name: Install ansible
+#   become: true
+#   ansible.builtin.apt:
+#     name:
+#       - ansible
+#     state: present
+#     update_cache: true
 
-- name: Install ansible lint and dev tools
+- name: Install ansible and dev tools
   become: true
   become_user: CI
   ansible.builtin.pip:
     name:
-      # - ansible
+      - ansible
       - ansible-dev-tools
     state: present
 

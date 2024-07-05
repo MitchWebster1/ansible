@@ -4,4 +4,18 @@
   become: true
   ansible.builtin.apt:
     update_cache: true
-    upgrade: 'yes'
+    upgrade: dist
+
+- name: Check if reboot is required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+    get_checksum: false
+  register: reboot_required_file
+
+- name: Reboot if necessary
+  ansible.builtin.reboot:
+  when: reboot_required_file.stat.exists
+
+- name: Remove unused dependencies
+  ansible.builtin.apt:
+    autoremove: true

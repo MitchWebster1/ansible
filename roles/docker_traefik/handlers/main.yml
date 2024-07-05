@@ -1,0 +1,7 @@
+---
+
+- name: Start traefik
+  community.docker.docker_compose:
+    project_src: /home/docker/traefik
+    state: present
+    restarted: true

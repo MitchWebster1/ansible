@@ -1,7 +1,7 @@
 ---
 
-- name: Install adguard home
-  hosts: adguard
+- name: Install traefik
+  hosts: traefik
   become: true
   become_method: ansible.builtin.sudo
   gather_facts: true
@@ -10,9 +10,11 @@
     - admin_users_groups
     - app_users_groups
     - docker_install
-    - docker_adguard_home
+    - docker_compose_setup
+    - docker_traefik
   vars:
-    users_app_users: adguard
+    users_app_users: docker
     users_app_groups:
       - docker
-      - adguard
+      - traefik
+    app_name: traefik

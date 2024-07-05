@@ -1,5 +1,6 @@
 ---
 
+# Users ssh keys
 users_users:
   - user: CI
     name: "Ansible server"
@@ -12,22 +13,22 @@ users_users:
       - "{{ vault_office_ssh_key }}"
       - "{{ vault_laptop_ssh_key }}"
 
-# users_admin_users: []
+# Admin users
 users_admin_users:
   - CI
   - mitch
 
-# users_admin_groups: []
+# Admin groups
 users_admin_groups:
   - sudo
   - admin
   - sshusers
 
-# App users no sudo permission
-# users_app_users:
-#   - bob
+# App users
 users_app_users: []
 
-# users_app_groups:
-#   - sshusers
+# App groups
 users_app_groups: []
+
+# Name of app
+app_name: []

@@ -1,85 +1,50 @@
 ---
 
+- name: Create proxy network
+  community.docker.docker_network:
+    name: proxy
+
 - name: Copy acme.json
-  become: true
-  become_user: traefik
   ansible.builtin.template:
     src: acme.json.j2
-    dest: /home/traefik/acme.json
-    owner: traefik
-    group: traefik
+    dest: /home/docker/traefik/acme.json
+    owner: docker
+    group: docker
     mode: '0600'
     force: false
     backup: true
 
 - name: Copy config.yml
-  become: true
-  become_user: traefik
   ansible.builtin.template:
     src: config.yml.j2
-    dest: /home/traefik/config.yml
-    owner: traefik
-    group: traefik
+    dest: /home/docker/traefik/config.yml
+    owner: docker
+    group: docker
     mode: '0644'
     force: false
     backup: true
 
 - name: Copy traefik.yml
-  become: true
-  become_user: traefik
   ansible.builtin.template:
     src: traefik.yml.j2
-    dest: /home/traefik/traefik.yml
-    owner: traefik
-    group: traefik
+    dest: /home/docker/traefik/traefik.yml
+    owner: docker
+    group: docker
     mode: '0644'
     force: false
     backup: true
 
-- name: Deploy traefik proxy network
-  # become_user: traefik
-  community.docker.docker_network:
-    name: proxy
+- name: Deploy traefik with docker compose
+  ansible.builtin.template:
+    src: docker_compose.yml.j2
+    dest: /home/docker/traefik/docker-compose.yml
+    mode: "0755"
+    owner: docker
+    group: docker
+  notify:
+    - Start traefik
 
-- name: Deploy traefik container
-  become: true
-  become_user: traefik
-  community.docker.docker_container:
-    name: traefik
-    image: traefik:latest
-    restart_policy: always
-    recreate: true
-    # env_file: /home/traefik/.env
-    security_opts:
-      - no-new-privileges:true
-    networks:
-      - name: proxy
-    env:
-      CF_API_EMAIL: "{{ cloudflare_email }}"
-      CF_DNS_API_TOKEN: "{{ cloudflare_api }}"
-    published_ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/localtime:/etc/localtime:ro
-      - /home/traefik/traefik.yml:/traefik.yml:ro
-      - /home/traefik/acme.json:/acme.json
-      - /home/traefik/config.yml:/config.yml:ro
-      - /home/traefik/logs:/var/log/traefik
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.traefik.entrypoints: "http"
-      traefik.http.routers.traefik.rule: "Host('{{ traefik_dashboard_url }}')"
-      # traefik.http.middlewares.traefik-auth.basicauth.users: "{{ traefik_dashboard_creds }}"
-      traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: "https"
-      traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto: "https"
-      traefik.http.routers.traefik.middlewares: "traefik-https-redirect"
-      traefik.http.routers.traefik-secure.entrypoints: "https"
-      traefik.http.routers.traefik-secure.rule: "Host(`{{ traefik_dashboard_url }}`)"
-      traefik.http.routers.traefik-secure.middlewares: "traefik-auth"
-      traefik.http.routers.traefik-secure.tls: "true"
-      traefik.http.routers.traefik-secure.tls.certresolver: "cloudflare"
-      traefik.http.routers.traefik-secure.tls.domains[0].main: "{{ domain_name }}"
-      traefik.http.routers.traefik-secure.tls.domains[0].sans: "*.{{ domain_name }}"
-      traefik.http.routers.traefik-secure.service: "api@internal"
+- name: Run traefik docker-compose up
+  community.docker.docker_compose:
+    project_src: /home/docker/traefik
+    state: present
