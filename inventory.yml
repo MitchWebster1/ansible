@@ -11,7 +11,7 @@ docker:
     traefik:
       ansible_host: 192.168.20.108 #traefik lxc
     adguard:
-      ansible_host: 192.168.20.10 #adguard lxc
+      ansible_host: 192.168.20.110 #adguard lxc
 
 proxmox:
   hosts:

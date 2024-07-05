@@ -1,4 +1,0 @@
----
-
-- name: Install ansible
-- ansible.builtin.import_playbook: playbooks/ansible_install.yml

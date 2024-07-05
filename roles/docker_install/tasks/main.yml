@@ -20,7 +20,7 @@
 
 - name: Add docker repository
   ansible.builtin.apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu noble stable
+    repo: deb https://download.docker.com/linux/ubuntu jammy stable
     state: present
 
 - name: Install docker-ce

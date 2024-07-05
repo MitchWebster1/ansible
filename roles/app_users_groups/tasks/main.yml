@@ -7,7 +7,6 @@
     state: present
   with_items:
     - "{{ users_app_groups }}"
-    - "{{ users_app_users }}"
 
 - name: Add app users
   become: true

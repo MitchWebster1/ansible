@@ -27,7 +27,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0440'
+    mode: "0440"
   become: true
 
 - name: Allow users in admin group to run sudo
@@ -54,9 +54,9 @@
 - name: Configure sshd_config
   ansible.builtin.lineinfile:
     state: present
-    path: '/etc/ssh/sshd_config'
-    regex: '^(#)?{{ item.key }}'
-    line: '{{ item.key }} {{ item.value }}'
+    path: "/etc/ssh/sshd_config"
+    regex: "^(#)?{{ item.key }}"
+    line: "{{ item.key }} {{ item.value }}"
   loop:
     - { key: 'StrictModes', value: 'yes' }
     - { key: 'PermitRootLogin', value: 'no' }

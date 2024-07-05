@@ -13,6 +13,6 @@
     - docker_adguard_home
   vars:
     users_app_users: adguard
-    users_app_groups: docker
-  vars_files:
-    - ../group_vars/admin_users.yml
+    users_app_groups:
+      - docker
+      - adguard

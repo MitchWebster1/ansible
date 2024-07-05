@@ -7,6 +7,3 @@
     - apt_upgrade
     - admin_users_groups
     - ansible_install
-
-  vars_files:
-    - ../group_vars/admin_users.yml
