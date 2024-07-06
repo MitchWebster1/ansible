@@ -1,7 +1,8 @@
 ---
 
-- name: Start traefik
-  community.docker.docker_compose:
+- name: Restart traefik
+  community.docker.docker_compose_v2:
     project_src: /home/docker/traefik
-    state: present
-    restarted: true
+    recreate: always
+    remove_orphans: true
+    state: restarted

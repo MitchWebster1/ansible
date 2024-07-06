@@ -1,7 +1,7 @@
 ---
 
-cloudflare_email: vault_cloudflare_email
-domain_name: vault_domain_name
-traefik_dashboard_url: vault_traefik_dashboard_url
-traefik_dashboard_creds: vault_traefik_dashboard_creds
-cloudflare_api: vault_cloudflare_api
+cloudflare_email: "{{ vault_cloudflare_email }}"
+domain_name: "{{ vault_domain_name }}"
+traefik_dashboard_url: "{{ vault_traefik_dashboard_url }}"
+traefik_dashboard_creds: "{{ vault_traefik_dashboard_creds }}"
+cloudflare_api: "{{ vault_cloudflare_api }}"

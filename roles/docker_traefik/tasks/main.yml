@@ -12,7 +12,6 @@
     group: docker
     mode: '0600'
     force: false
-    backup: true
 
 - name: Copy config.yml
   ansible.builtin.template:
@@ -21,8 +20,8 @@
     owner: docker
     group: docker
     mode: '0644'
-    force: false
-    backup: true
+  changed_when: true
+  notify: Restart traefik
 
 - name: Copy traefik.yml
   ansible.builtin.template:
@@ -31,8 +30,6 @@
     owner: docker
     group: docker
     mode: '0644'
-    force: false
-    backup: true
 
 - name: Deploy traefik with docker compose
   ansible.builtin.template:
@@ -41,10 +38,10 @@
     mode: "0755"
     owner: docker
     group: docker
-  notify:
-    - Start traefik
 
 - name: Run traefik docker-compose up
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: /home/docker/traefik
+    # recreate: always
+    remove_orphans: true
     state: present
