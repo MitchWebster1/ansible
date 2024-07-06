@@ -1,6 +1,6 @@
 ---
 
-name: CI
+name: ansible_vault_encrypt
 on:
   push:
     branches: [ "main" ]
