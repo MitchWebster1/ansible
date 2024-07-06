@@ -12,5 +12,4 @@ jobs:
       - uses: ballistax/ansible-vault-action@master
         with:
             vault_key: ${{ secrets.VAULT_PASS }}
-            args: encrypt group_vars/vault.yml
-
+            args: encrypt /home/CI/ansible/group_vars/vault.yml
