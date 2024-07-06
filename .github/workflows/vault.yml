@@ -1,6 +1,6 @@
 ---
 
-name: CI
+name: ansible_vault_encrypt
 on:
   push:
     branches: [ "main" ]
@@ -12,4 +12,4 @@ jobs:
       - uses: ballistax/ansible-vault-action@master
         with:
             vault_key: ${{ secrets.VAULT_PASS }}
-            args: encrypt /home/CI/ansible/group_vars/vault.yml
+            args: encrypt /ansible/group_vars/vault.yml
