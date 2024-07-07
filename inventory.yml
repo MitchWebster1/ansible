@@ -9,7 +9,7 @@ ansible:
 docker:
   hosts:
     traefik:
-      ansible_host: 192.168.20.111 #traefik lxc
+      ansible_host: 192.168.20.20 #traefik lxc
     adguard:
       ansible_host: 192.168.20.111 #adguard lxc
 

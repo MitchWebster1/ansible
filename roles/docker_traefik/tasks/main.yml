@@ -12,6 +12,7 @@
     group: docker
     mode: '0600'
     force: false
+  notify: Restart traefik
 
 - name: Copy config.yml
   ansible.builtin.template:
@@ -20,7 +21,6 @@
     owner: docker
     group: docker
     mode: '0644'
-  changed_when: true
   notify: Restart traefik
 
 - name: Copy traefik.yml
@@ -30,8 +30,9 @@
     owner: docker
     group: docker
     mode: '0644'
+  notify: Restart traefik
 
-- name: Deploy traefik with docker compose
+- name: Copy docker compose
   ansible.builtin.template:
     src: docker_compose.yml.j2
     dest: /home/docker/traefik/docker-compose.yml
