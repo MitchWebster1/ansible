@@ -10,8 +10,10 @@ services:
     networks:
       - proxy
     ports:
-      - 80:80
-      - 443:443
+      - 80:80 #Internal http
+      - 81:81 #External http
+      - 443:443 #Internal https
+      - 444:444 #External https
     environment:
       CF_API_EMAIL: "{{ cloudflare_email }}"
       CF_DNS_API_TOKEN: "{{ cloudflare_api }}"
@@ -40,6 +42,15 @@ services:
       - "traefik.http.routers.traefik-secure.tls.domains[0].main={{ domain_name }}"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.{{ domain_name }}"
       - "traefik.http.routers.traefik-secure.service=api@internal"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - 6379:6379
 
 networks:
   proxy:

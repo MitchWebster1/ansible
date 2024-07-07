@@ -23,9 +23,15 @@ entryPoints:
 serversTransport:
   insecureSkipVerify: true
 providers:
+  providersThrottleDuration: 2s
   docker:
+    watch: true
     endpoint: "unix:///var/run/docker.sock"
+    swarmModeRefreshSeconds: 15s
     exposedByDefault: false
+  redis:
+    endpoints:
+      - "redis:6379"
   file:
     filename: /config.yml
 certificatesResolvers:
