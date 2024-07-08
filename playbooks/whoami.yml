@@ -1,7 +1,7 @@
 ---
 
-- name: Install traefik
-  hosts: traefik
+- name: Install whoami
+  hosts: test
   become: true
   become_method: ansible.builtin.sudo
   gather_facts: true
@@ -11,10 +11,12 @@
     - app_users_groups
     - docker_install
     - docker_compose_setup
-    - docker_traefik
+    - docker_traefik_kop
+    - whoami
   vars:
     users_app_users: docker
     users_app_groups:
       - docker
     app_name:
-      - traefik
+      - traefik_kop
+      - whoami

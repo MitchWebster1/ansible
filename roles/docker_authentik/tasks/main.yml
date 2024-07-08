@@ -1,0 +1,30 @@
+---
+
+- name: Create docker network
+  community.docker.docker_network:
+    name: authentik
+
+
+- name: Set up app directory
+  ansible.builtin.file:
+    path: /home/docker/authentik/{{ item }}
+    state: directory
+    mode: "0755"
+    owner: docker
+    group: docker
+  with_items: "{{ app_folders }}"
+
+- name: Copy docker compose
+  ansible.builtin.template:
+    src: docker_compose.yml.j2
+    dest: /home/docker/authentik/docker-compose.yml
+    mode: "0755"
+    owner: docker
+    group: docker
+
+- name: Run docker-compose up
+  community.docker.docker_compose_v2:
+    project_src: /home/docker/authentik
+    recreate: always
+    remove_orphans: true
+    state: present

@@ -1,0 +1,11 @@
+
+app_folders:
+  - media
+  - certs
+  - custom-templates
+  - database
+  - redis
+pg_name: authentik
+pg_user: authentik
+pg_pass: "{{ vault_pg_pass }}"
+authentik_secret_key: "{{ vault_authentik_secret_key }}"

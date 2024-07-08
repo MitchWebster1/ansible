@@ -1,0 +1,20 @@
+---
+
+- name: Create proxy network
+  community.docker.docker_network:
+    name: proxy
+
+- name: Copy docker compose
+  ansible.builtin.template:
+    src: docker_compose.yml.j2
+    dest: /home/docker/traefik_kop/docker-compose.yml
+    mode: "0755"
+    owner: docker
+    group: docker
+
+- name: Run docker-compose up
+  community.docker.docker_compose_v2:
+    project_src: /home/docker/traefik_kop
+    # recreate: always
+    remove_orphans: true
+    state: present

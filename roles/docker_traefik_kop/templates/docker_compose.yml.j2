@@ -1,0 +1,17 @@
+---
+
+services:
+  traefik-kop:
+    container_name: traefik_kop
+    image: "ghcr.io/jittering/traefik-kop:latest"
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - "REDIS_ADDR=192.168.20.20:6379"
+
+networks:
+  proxy:
+    external: true

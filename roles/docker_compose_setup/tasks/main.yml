@@ -13,8 +13,9 @@
 
 - name: Set up app directory
   ansible.builtin.file:
-    path: /home/{{ users_app_users }}/{{ app_name }}
+    path: /home/{{ users_app_users }}/{{ item }}
     state: directory
     mode: "0755"
     owner: "{{ users_app_users }}"
     group: "{{ users_app_users }}"
+  with_items: "{{ app_name }}"

@@ -2,7 +2,7 @@
 
 services:
   traefik:
-    image: traefik:latest
+    image: traefik:v2.11.6
     container_name: traefik
     restart: unless-stopped
     security_opt:
@@ -11,9 +11,11 @@ services:
       - proxy
     ports:
       - 80:80 #Internal http
-      - 81:81 #External http
+      # - 81:81 #External http
       - 443:443 #Internal https
-      - 444:444 #External https
+      # - 444:444 #External https
+    depends_on:
+      - redis
     environment:
       CF_API_EMAIL: "{{ cloudflare_email }}"
       CF_DNS_API_TOKEN: "{{ cloudflare_api }}"
