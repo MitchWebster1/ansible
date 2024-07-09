@@ -1,0 +1,8 @@
+---
+
+- name: Print facts
+  hosts: authentik
+  tasks:
+    - name: Print variable
+      ansible.builtin.debug:
+        var: ansible_facts['eth0']['macaddress'] # ['ipv4']['address']

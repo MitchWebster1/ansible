@@ -11,6 +11,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - "REDIS_ADDR=192.168.20.20:6379"
+      - "BIND_IP={{ ansible_facts['eth0']['ipv4']['address'] }}"
 
 networks:
   proxy:
