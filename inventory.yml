@@ -4,21 +4,21 @@ bootstrap:
 
 ansible:
   hosts:
-    192.168.10.50:
+    10.10.20.5:
 
 docker:
   hosts:
     traefik:
-      ansible_host: 192.168.20.20 #traefik lxc
+      ansible_host: 10.10.20.10 #traefik lxc
     authentik:
-      ansible_host: 192.168.20.114 #authentik lxc
+      ansible_host: 10.10.20.15 #authentik lxc
     test:
-      ansible_host: 192.168.20.112
+      ansible_host: 10.10.20.112
 
 proxmox:
   hosts:
-    192.168.10.5:
+    10.10.10.5:
 
 opnsense:
   hosts:
-    192.168.10.1:
+    10.10.10.1:
